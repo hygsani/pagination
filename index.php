@@ -20,4 +20,4 @@ $dummyData = array(
 	'Vivamus id tellus vitae eros scelerisque pellentesque.'
 );
 
-echo $pagination->renderPagination($dummyData, count($dummyData));
+echo $pagination->renderPagination($dummyData, count($dummyData), $_GET['p']);

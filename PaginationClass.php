@@ -5,16 +5,16 @@ class PaginationClass
 
 	private $rowPerPage;
 
-	public function __construct($rowPerPage = 10)
+	public function __construct($rowPerPage = 2)
 	{
 		$this->rowPerPage = $rowPerPage;
 	}
 
-	public function renderPagination($data, $totalRows)
+	public function renderPagination($data, $totalRows, $currentPage)
 	{
-		echo $this->_renderData($data);
+		echo $this->_renderData($data, $currentPage);
 
-		$totalPage = $totalRows / $this->rowPerPage;
+		$totalPage = ceil($totalRows / $this->rowPerPage);
 
 		for ($i = 0; $i < $totalPage; $i++) {
 			$params = $i == 0 ? '/' : '?p=' . ($i + 1);
@@ -23,11 +23,19 @@ class PaginationClass
 		}
 	}
 
-	private function _renderData($data)
+	private function _renderData($data, $currentPage)
 	{
+		if ($currentPage) {
+			$start = $currentPage > 2 ? ($currentPage * $this->rowPerPage) - $this->rowPerPage : $currentPage;
+			$end = $currentPage > 2 ? ($currentPage * $this->rowPerPage) - 1 : ($start * $this->rowPerPage) - 1;
+		} else {
+			$start = 0;
+			$end = $this->rowPerPage - 1;
+		}
+
 		echo '<ul>';
 
-		for ($i = 0; $i < $this->rowPerPage; $i++) {
+		for ($i = $start; $i <= ($end == count($data) ? $end - 1 : $end); $i++) {
 			echo '<li>(' . ($i + 1) . ') ' . $data[$i] . '</li>';
 		}
 

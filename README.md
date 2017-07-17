@@ -1,7 +1,9 @@
 # simple pagination class for array
 
 example of use:
+
 require_once 'PaginationClass.php';
+
 $pagination = new PaginationClass;
 
 $dataOfArrays = array(

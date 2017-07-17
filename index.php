@@ -20,12 +20,4 @@ $dummyData = array(
 	'Vivamus id tellus vitae eros scelerisque pellentesque.'
 );
 
-echo '<ul>';
-
-for ($i = 0; $i < count($dummyData); $i++) {
-	echo '<li>' . $dummyData[$i] . '</li>';
-}
-
-echo '</ul>';
-
-echo $pagination->renderPagination(count($dummyData));
+echo $pagination->renderPagination($dummyData, count($dummyData));

@@ -5,7 +5,7 @@ class PaginationClass
 
 	private $rowPerPage;
 
-	public function __construct($rowPerPage = 2)
+	public function __construct($rowPerPage = 8)
 	{
 		$this->rowPerPage = $rowPerPage;
 	}
@@ -26,8 +26,9 @@ class PaginationClass
 	private function _renderData($data, $currentPage)
 	{
 		if ($currentPage) {
-			$start = $currentPage > 2 ? ($currentPage * $this->rowPerPage) - $this->rowPerPage : $currentPage;
-			$end = $currentPage > 2 ? ($currentPage * $this->rowPerPage) - 1 : ($start * $this->rowPerPage) - 1;
+			$start = $currentPage > 2 ? (($currentPage * $this->rowPerPage) - $this->rowPerPage) :
+				($currentPage * $this->rowPerPage) - $this->rowPerPage;
+			$end = $currentPage > 2 ? ($currentPage * $this->rowPerPage) - 1 : ($currentPage * $this->rowPerPage) - 1;
 		} else {
 			$start = 0;
 			$end = $this->rowPerPage - 1;
@@ -35,7 +36,7 @@ class PaginationClass
 
 		echo '<ul>';
 
-		for ($i = $start; $i <= ($end == count($data) ? $end - 1 : $end); $i++) {
+		for ($i = $start; $i <= ($end > count($data) ? $end - ($end - count($data)) - 1 : $end); $i++) {
 			echo '<li>(' . ($i + 1) . ') ' . $data[$i] . '</li>';
 		}
 
